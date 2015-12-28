@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
 
   s.author       = { "Blake Watters" => "blakewatters@gmail.com" }
 
-  s.platform     = :ios, '5.0'
+  s.platform     = :ios, '5.1.1'
   s.requires_arc = true
 
   s.source       = { :git => "https://github.com/swesteme/RKTableController.git" }
