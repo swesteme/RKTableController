@@ -8,14 +8,20 @@ Pod::Spec.new do |s|
 
   s.author       = { "Blake Watters" => "blakewatters@gmail.com" }
 
-  s.platform     = :ios, '5.1.1'
+  #s.platform     = :ios, '5.1.1'
+  s.platform     = :ios
+  s.ios.deployment_target = "5.1.1"
   s.requires_arc = true
 
-  s.source       = { :git => "https://github.com/swesteme/RKTableController.git" }
+  s.source       = { :git => "https://github.com/swesteme/RKTableController.git", :tag => "#{s.version}" }
   s.source_files = 'Code/*.{h,m}'
   s.ios.framework    = 'QuartzCore'
 
   s.dependency 'RestKit', '~> 0.26.0'
+  s.dependency       'RKValueTransformers', '~> 1.1.0'
+  s.dependency       'ISO8601DateFormatterValueTransformer', '~> 0.6.1'
+  s.dependency       'AFNetworking', '~> 1.3.0'
+  s.dependency       'SOCKit'
 
   s.prefix_header_contents = <<-EOS
 #import <Availability.h>
