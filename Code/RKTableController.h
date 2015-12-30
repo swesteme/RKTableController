@@ -24,7 +24,7 @@
 #import "RKTableSection.h"
 #import "RKTableViewCellMappings.h"
 #import "RKTableItem.h"
-#import "RKObjectMapping.h"
+#import <RestKit/RestKit.h>
 
 @protocol RKTableControllerDelegate <RKAbstractTableControllerDelegate>
 

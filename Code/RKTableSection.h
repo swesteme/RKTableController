@@ -19,7 +19,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RKObjectMapping.h"
+#import <RestKit/RestKit.h>
 #import "RKTableViewCellMappings.h"
 
 @class RKTableController;
