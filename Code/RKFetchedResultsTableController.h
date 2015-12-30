@@ -20,7 +20,7 @@
 
 #import <CoreData/CoreData.h>
 #import "RKAbstractTableController.h"
-#import "RKManagedObjectCaching.h"
+#import <RestKit/RestKit.h>
 
 typedef UIView *(^RKFetchedResultsTableViewViewForHeaderInSectionBlock)(NSUInteger sectionIndex, NSString *sectionTitle);
 typedef void (^RKFetchedResultsTableViewScrollViewBlock)(UIScrollView *scrollView);
