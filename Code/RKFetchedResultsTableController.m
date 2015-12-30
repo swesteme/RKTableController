@@ -20,12 +20,6 @@
 
 #import "RKFetchedResultsTableController.h"
 #import "RKAbstractTableController_Internals.h"
-#import "RKManagedObjectStore.h"
-#import "RKMappingOperation.h"
-#import "RKEntityMapping.h"
-#import "RKLog.h"
-#import "RKManagedObjectRequestOperation.h"
-#import "RKObjectManager.h"
 
 // Define logging component
 #undef RKLogComponent
@@ -86,8 +80,8 @@ static BOOL RKShouldReloadRowForManagedObjectWithCellMapping(NSManagedObject *ma
 - (BOOL)performFetch:(NSError **)error
 {
     NSAssert(self.fetchedResultsController, @"Cannot perform a fetch: self.fetchedResultsController is nil.");
-    
-    [NSFetchedResultsController deleteCacheWithName:self.fetchedResultsController.cacheName];    
+
+    [NSFetchedResultsController deleteCacheWithName:self.fetchedResultsController.cacheName];
     BOOL success = [self.fetchedResultsController performFetch:error];
     if (!success) {
         RKLogError(@"performFetch failed with error: %@", [*error localizedDescription]);
@@ -169,7 +163,7 @@ static BOOL RKShouldReloadRowForManagedObjectWithCellMapping(NSManagedObject *ma
         firstFooterIndex += (![self isEmpty] || self.showsHeaderRowsWhenEmpty) ? [self.headerItems count] : 0;
         firstFooterIndex += ([self isEmpty] && self.emptyItem) ? 1 : 0;
     }
-    
+
     return row >= firstFooterIndex;
 }
 
@@ -279,7 +273,7 @@ static BOOL RKShouldReloadRowForManagedObjectWithCellMapping(NSManagedObject *ma
             if (fetchRequest) break;
         }
     }
-    
+
     NSAssert(fetchRequest, @"Failed to find a fetchRequest for URL: %@", self.request.URL);
     self.fetchRequest = fetchRequest;
 
@@ -289,7 +283,7 @@ static BOOL RKShouldReloadRowForManagedObjectWithCellMapping(NSManagedObject *ma
     if (self.sortDescriptors) {
         [fetchRequest setSortDescriptors:self.sortDescriptors];
     }
-    
+
     RKLogTrace(@"Loading fetched results table view from managed object context %@ with fetch request: %@", self.fetchedResultsControllerContext, fetchRequest);
     NSFetchedResultsController *fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                                                                                managedObjectContext:self.fetchedResultsControllerContext
@@ -307,7 +301,7 @@ static BOOL RKShouldReloadRowForManagedObjectWithCellMapping(NSManagedObject *ma
     }
     [self updateSortedArray];
     [self didFinishLoad];
-    
+
     // Load the table view after we have finished the load to ensure the state
     // is accurate when computing the table view data source responses
     [self.tableView reloadData];
@@ -475,13 +469,13 @@ static BOOL RKShouldReloadRowForManagedObjectWithCellMapping(NSManagedObject *ma
             }
         } failure:^(RKObjectRequestOperation *operation, NSError *error) {
             RKLogError(@"Failed to delete managed object deleted by table controller. Error: %@", error);
-            
+
             // TODO: This incorrect. Its not a great assumption.
             RKLogTrace(@"About to locally delete managedObject: %@", managedObject);
             NSManagedObjectContext *managedObjectContext = managedObject.managedObjectContext;
             [managedObjectContext performBlock:^{
                 [managedObjectContext deleteObject:managedObject];
-                
+
                 NSError *error = nil;
                 [managedObjectContext save:&error];
                 if (error) {
@@ -601,7 +595,7 @@ static BOOL RKShouldReloadRowForManagedObjectWithCellMapping(NSManagedObject *ma
         NSIndexPath *fetchedResultsIndexPath = [self fetchedResultsIndexPathForIndexPath:indexPath];
         return (fetchedResultsIndexPath.row < [self.arraySortedFetchedObjects count]) ? [self.arraySortedFetchedObjects objectAtIndex:fetchedResultsIndexPath.row] : nil;
     }
-    
+
     NSIndexPath *fetchedResultsIndexPath = [self fetchedResultsIndexPathForIndexPath:indexPath];
     id <NSFetchedResultsSectionInfo> sectionInfo = [[_fetchedResultsController sections] objectAtIndex:fetchedResultsIndexPath.section];
     if (fetchedResultsIndexPath.row < [sectionInfo numberOfObjects]) {

@@ -20,7 +20,7 @@
 
 #import <UIKit/UIKit.h>
 #import "RKRefreshGestureRecognizer.h"
-#import "RKObjectRequestOperation.h"
+#import <RestKit/RestKit.h>
 
 /*
  A private continuation class for subclass implementations of RKAbstractTableController

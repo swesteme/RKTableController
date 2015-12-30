@@ -11,8 +11,7 @@
 #if TARGET_OS_IPHONE
 
 #import "RKTableController.h"
-#import "RKFetchedResultsTableController.h"
-#import "RKManagedObjectStore.h"
+#import <RestKit/RestKit.h>
 
 @implementation RKObjectManager (RKTableController)
 

@@ -19,7 +19,7 @@
 //
 
 #import "RKKeyboardScroller.h"
-#import "RKLog.h"
+#import <RestKit/RestKit.h>
 #import "UIView+FindFirstResponder.h"
 
 // Define logging component

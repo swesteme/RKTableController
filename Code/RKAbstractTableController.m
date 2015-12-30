@@ -20,16 +20,9 @@
 
 #import "RKAbstractTableController.h"
 #import "RKAbstractTableController_Internals.h"
-#import "RKMappingOperation.h"
-#import "RKLog.h"
-#import "RKErrors.h"
 #import "UIView+FindFirstResponder.h"
 #import "RKRefreshGestureRecognizer.h"
 #import "RKTableSection.h"
-#import "RKObjectRequestOperation.h"
-#import "RKObjectMappingOperationDataSource.h"
-#import "RKManagedObjectRequestOperation.h"
-#import "RKHTTPUtilities.h"
 
 // Define logging component
 #undef RKLogComponent
@@ -60,7 +53,7 @@ NSString * RKStringFromTableControllerState(RKTableControllerState state)
     BOOL isOffline = (state & RKTableControllerStateOffline);
     BOOL isLoading = (state & RKTableControllerStateLoading);
     BOOL isError = (state & RKTableControllerStateError);
-    
+
     return [NSString stringWithFormat:@"isLoaded=%@, isEmpty=%@, isOffline=%@, isLoading=%@, isError=%@, isNormal=%@",
             RKStringFromBool(isLoaded), RKStringFromBool(isEmpty), RKStringFromBool(isOffline),
             RKStringFromBool(isLoading), RKStringFromBool(isError), RKStringFromBool(state == RKTableControllerStateNormal)];
@@ -74,7 +67,7 @@ NSString * RKStringDescribingTransitionFromTableControllerStateToState(RKTableCo
     BOOL loadingChanged = ((oldState ^ newState) & RKTableControllerStateLoading);
     BOOL errorChanged = ((oldState ^ newState) & RKTableControllerStateError);
     BOOL normalChanged = (oldState == RKTableControllerStateNormal || newState == RKTableControllerStateNormal) && (oldState != newState);
-    
+
     NSMutableArray *changeDescriptions = [NSMutableArray new];
     if (loadedChanged) [changeDescriptions addObject:[NSString stringWithFormat:@"isLoaded=%@", RKStringFromBool((newState & RKTableControllerStateNotYetLoaded) == 0)]];
     if (emptyChanged) [changeDescriptions addObject:[NSString stringWithFormat:@"isEmpty=%@", RKStringFromBool(newState & RKTableControllerStateEmpty)]];
@@ -82,7 +75,7 @@ NSString * RKStringDescribingTransitionFromTableControllerStateToState(RKTableCo
     if (loadingChanged) [changeDescriptions addObject:[NSString stringWithFormat:@"isLoading=%@", RKStringFromBool(newState & RKTableControllerStateLoading)]];
     if (errorChanged) [changeDescriptions addObject:[NSString stringWithFormat:@"isError=%@", RKStringFromBool(newState & RKTableControllerStateError)]];
     if (normalChanged) [changeDescriptions addObject:[NSString stringWithFormat:@"isNormal=%@", RKStringFromBool(newState == RKTableControllerStateNormal)]];
-    
+
     return [changeDescriptions componentsJoinedByString:@", "];
 }
 
@@ -387,17 +380,17 @@ NSString * RKStringDescribingTransitionFromTableControllerStateToState(RKTableCo
                                                reuseIdentifier:cellMapping.reuseIdentifier];
         RKLogTrace(@"Failed to dequeue existing cell object for reuse identifier '%@', instantiated new cell: %@", cellMapping.reuseIdentifier, cell);
     }
-    
+
     if (cellMapping.managesCellAttributes) {
         cell.accessoryType = cellMapping.accessoryType;
         cell.selectionStyle = cellMapping.selectionStyle;
     }
-    
+
     // Fire the prepare callbacks
     for (void (^block)(UITableViewCell *) in cellMapping.prepareCellBlocks) {
         block(cell);
     }
-    
+
     return cell;
 }
 
@@ -427,7 +420,7 @@ NSString * RKStringDescribingTransitionFromTableControllerStateToState(RKTableCo
     if (success == NO && error != nil) {
         RKLogError(@"Failed table cell mapping: %@", error);
     }
-    
+
     if (self.onPrepareCellForObjectAtIndexPath) {
         self.onPrepareCellForObjectAtIndexPath(cell, mappableObject, indexPath);
     }
@@ -485,20 +478,20 @@ NSString * RKStringDescribingTransitionFromTableControllerStateToState(RKTableCo
     RKLogTrace(@"%@: Row at indexPath %@ deselected for tableView %@", self, indexPath, tableView);
 
     id object = [self objectForRowAtIndexPath:indexPath];
-    
+
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     RKTableViewCellMapping *cellMapping = [_cellMappings cellMappingForObject:object];
-    
+
     if (cellMapping.onDeselectCellForObjectAtIndexPath) {
         RKLogTrace(@"%@: Invoking onDeselectCellForObjectAtIndexPath block with cellMapping %@ for object %@ at indexPath = %@", self, cell, object, indexPath);
         cellMapping.onDeselectCellForObjectAtIndexPath(cell, object, indexPath);
     }
-    
+
     // Table level selection callbacks
     if (self.onDeselectCellForObjectAtIndexPath) {
         self.onDeselectCellForObjectAtIndexPath(cell, object, indexPath);
     }
-    
+
     if ([self.delegate respondsToSelector:@selector(tableController:didDeselectCell:forObject:atIndexPath:)]) {
         [self.delegate tableController:self didDeselectCell:cell forObject:object atIndexPath:indexPath];
     }
@@ -663,7 +656,7 @@ NSString * RKStringDescribingTransitionFromTableControllerStateToState(RKTableCo
         RKLogWarning(@"No operation queue configured: starting operation unqueued");
         [objectRequestOperation start];
     }
-    
+
     self.request = request;
     self.objectRequestOperation = objectRequestOperation;
 }
@@ -678,7 +671,7 @@ NSString * RKStringDescribingTransitionFromTableControllerStateToState(RKTableCo
     } else if ([keyPath isEqualToString:@"error"]) {
         [self setErrorState:(self.error != nil)];
     }
-    
+
     // KVO on the request operation
     if (object == self.objectRequestOperation) {
         if ([keyPath isEqualToString:@"isExecuting"]) {
@@ -700,15 +693,15 @@ NSString * RKStringDescribingTransitionFromTableControllerStateToState(RKTableCo
 
                     [self didFinishLoad];
                 }
-                
+
                 self.objectRequestOperation = nil;
             }
-            
+
         } else if ([keyPath isEqualToString:@"isCancelled"]) {
             RKLogTrace(@"tableController %@ cancelled loading.", self);
             self.loading = NO;
             self.objectRequestOperation = nil;
-            
+
             if ([self.delegate respondsToSelector:@selector(tableControllerDidCancelLoad:)]) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.delegate tableControllerDidCancelLoad:self];
@@ -933,7 +926,7 @@ NSString * RKStringDescribingTransitionFromTableControllerStateToState(RKTableCo
 
         // Remove the image overlay while we are loading
         [self removeImageOverlay];
-        
+
         if (self.loadingView) {
             [self addToOverlayView:self.loadingView modally:NO];
         }
@@ -1022,7 +1015,7 @@ NSString * RKStringDescribingTransitionFromTableControllerStateToState(RKTableCo
 {
     RKTableControllerState oldState = [[change valueForKey:NSKeyValueChangeOldKey] integerValue];
     RKTableControllerState newState = [[change valueForKey:NSKeyValueChangeNewKey] integerValue];
-    
+
     if (oldState == newState) {
         return;
     }
@@ -1065,7 +1058,7 @@ NSString * RKStringDescribingTransitionFromTableControllerStateToState(RKTableCo
     }
 
     // Remove the overlay if no longer in use
-    [self resetOverlayView];        
+    [self resetOverlayView];
 }
 
 #pragma mark - Pull to Refresh

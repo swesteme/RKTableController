@@ -20,7 +20,7 @@
 
 #import "NSBundle+RKTableControllerAdditions.h"
 #import "UIImage+RKAdditions.h"
-#import "RKLog.h"
+#import <RestKit/RestKit.h>
 
 @implementation NSBundle (RKTableControllerAdditions)
 

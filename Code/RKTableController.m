@@ -20,10 +20,7 @@
 
 #import "RKTableController.h"
 #import "RKAbstractTableController_Internals.h"
-#import "RKLog.h"
 #import "NSArray+RKAdditions.h"
-#import "RKMappingOperation.h"
-#import "RKMappingOperationDataSource.h"
 
 // Define logging component
 #undef RKLogComponent
@@ -273,7 +270,7 @@
 {
     // TODO: Could not get the KVO to work without a boolean property...
     // TODO: Apply any sorting...
-    
+
     if (self.sectionNameKeyPath) {
         NSArray *sectionedObjects = [objects sectionsGroupedByKeyPath:self.sectionNameKeyPath];
         if ([sectionedObjects count] == 0) {
@@ -377,7 +374,7 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     NSAssert(tableView == self.tableView, @"tableView:titleForHeaderInSection: invoked with inappropriate tableView: %@", tableView);
-    
+
     if (self.titleForHeaderInSectionBlock) {
         return self.titleForHeaderInSectionBlock(section);
     } else {
@@ -449,7 +446,7 @@
         return self.heightForHeaderInSectionBlock(sectionIndex);
     } else {
         RKTableSection *section = [self sectionAtIndex:sectionIndex];
-        
+
         if (section.headerHeight) {
             return section.headerHeight;
         } else if (section.headerTitle) {
