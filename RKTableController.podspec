@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "RKTableController"
-  s.version      = "0.6.8"
+  s.version      = "0.6.9"
   s.summary      = "RKTableController provides stateful, network integrated UITableViews powered by RestKit."
   s.homepage     = "https://github.com/RestKit/RKTableController"
 
@@ -38,12 +38,13 @@ Pod::Spec.new do |s|
   #import <Security/Security.h>
 #endif
 
-#ifdef COCOAPODS_POD_AVAILABLE_RestKit_CoreData
-    #import <CoreData/CoreData.h>
-#endif
-
 // This is a workaround for build order problem!!!
 // Should be sufficient to import CoreData headers before importing RestKit headers.
 #define RKCoreDataIncluded
+
+#import <RestKit/CoreData.h>
+#import <CoreData/CoreData.h>
+#import <RestKit/RestKit.h>
+#import "AFHttpClient.h"
 EOS
 end
