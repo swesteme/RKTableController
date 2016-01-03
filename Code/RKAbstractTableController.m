@@ -18,6 +18,7 @@
 //  limitations under the License.
 //
 
+#import <RestKit/RestKit.h>
 #import "RKAbstractTableController.h"
 #import "RKAbstractTableController_Internals.h"
 #import "UIView+FindFirstResponder.h"
