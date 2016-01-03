@@ -18,6 +18,8 @@
 //  limitations under the License.
 //
 
+#import <CoreData/CoreData.h>
+#import <RestKit/CoreData.h>
 #import <RestKit/RestKit.h>
 #import "RKAbstractTableController.h"
 #import "RKAbstractTableController_Internals.h"
