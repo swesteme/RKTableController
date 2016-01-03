@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "RKTableController"
-  s.version      = "0.6.10"
+  s.version      = "0.6.11"
   s.summary      = "RKTableController provides stateful, network integrated UITableViews powered by RestKit."
   s.homepage     = "https://github.com/RestKit/RKTableController"
 
