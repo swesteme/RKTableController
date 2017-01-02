@@ -20,7 +20,7 @@
 
 #import <CoreData/CoreData.h>
 #import <RestKit/CoreData.h>
-#import <RestKit/ObjectMapping/RKObjectMappingOperationDataSource.h>
+#import <RestKit/RKObjectMappingOperationDataSource.h>
 #import <RestKit/RestKit.h>
 #import "RKAbstractTableController.h"
 #import "RKAbstractTableController_Internals.h"
