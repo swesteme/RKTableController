@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "RKTableController"
-  s.version      = "0.6.11"
+  s.version      = "0.6.12"
   s.summary      = "RKTableController provides stateful, network integrated UITableViews powered by RestKit."
   s.homepage     = "https://github.com/RestKit/RKTableController"
 
@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   s.source_files = 'Code/*.{h,m}'
   s.ios.framework    = 'QuartzCore'
 
-  s.dependency 'RestKit', '~> 0.26.0'
+  s.dependency 'RestKit', '~> 0.27.0'
   s.dependency       'RKValueTransformers', '~> 1.1.0'
   s.dependency       'ISO8601DateFormatterValueTransformer', '~> 0.6.1'
   s.dependency       'AFNetworking', '~> 1.3.0'
