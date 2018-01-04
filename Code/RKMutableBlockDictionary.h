@@ -40,6 +40,6 @@
  @param block An Objective-C block returning an id and accepting no parameters
  @param key An NSString key for setting the
  */
-- (void)setValueWithBlock:(id (^)())block forKey:(NSString *)key;
+- (void)setValueWithBlock:(id (^)(void))block forKey:(NSString *)key;
 
 @end

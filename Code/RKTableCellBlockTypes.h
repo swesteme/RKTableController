@@ -10,6 +10,6 @@ typedef NSIndexPath *(^RKTableTargetIndexPathForMoveBlock)(UITableViewCell *cell
 typedef UITableViewCellEditingStyle(^RKTableCellEditingStyleForObjectAtIndexPathBlock)(UITableViewCell *cell, id object, NSIndexPath *indexPath);
 typedef NSString *(^RKTableStringForObjectAtIndexPathBlock)(UITableViewCell *cell, id object, NSIndexPath *indexPath);
 typedef CGFloat(^RKTableHeightOfCellForObjectAtIndexPathBlock)(id object, NSIndexPath *indexPath);
-typedef void(^RKTableVoidBlock)();
+typedef void(^RKTableVoidBlock)(void);
 typedef void(^RKTableCellBlock)(UITableViewCell *cell);
 typedef void(^RKTableCellForObjectAtIndexPathBlock)(UITableViewCell *cell, id object, NSIndexPath *indexPath);
